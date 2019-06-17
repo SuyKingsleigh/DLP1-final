@@ -1,6 +1,6 @@
->Comunicação serial entre duas placas
+#Comunicação serial entre duas placas
 
->>>>>FPGA 1 (Transmissor assincrono)<<<<<
+##FPGA 1 (Transmissor assincrono)
 
 > Entrada Mensagens input;
 > TX (Saída mensangens);
