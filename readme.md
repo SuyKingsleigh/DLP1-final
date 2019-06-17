@@ -2,12 +2,12 @@
 
 ##FPGA 1 (Transmissor assincrono)
 
-> Entrada Mensagens input;
-> TX (Saída mensangens);
+ Entrada Mensagens input;
+ TX (Saída mensangens);
 
->Entrada Mensanges => Display 7 segmentos x N;
-> Quando transmite FPGA 1 -> FPGA2 N=8, quando for local (FPGA1 -> fpga1) N= 4;
->Mensagens = Vetor ASCII (String);
+Entrada Mensanges => Display 7 segmentos x N;
+ Quando transmite FPGA 1 -> FPGA2 N=8, quando for local (FPGA1 -> fpga1) N= 4;
+Mensagens = Vetor ASCII (String);
 * Fazer um componente para conversão; 
 
 * Fazer um conversor paralelo-serial OK
