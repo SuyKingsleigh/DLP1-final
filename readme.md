@@ -14,13 +14,19 @@ Mensagens = Vetor ASCII (String);
 * Fazer um parity checker
 
 * Entrada Mensagens -> Conversor paralelo-serial + Paridade(Par e impar)  -> Saída TX 
-        * Assíncrona; 
-        * 2 stop bits; 
-        * Gerador de baudrate; 
-                * Config (input), define quantos bits vai transmitir por segundo; 
-                * CLK 50MHz; 
-                * Será feito com um divisor de clock; 
-                * Deve ter pelo menos 4 faixas de transmissão diferentes
+* Assíncrona; 
+        
+* 2 stop bits; 
+        
+* Gerador de baudrate; 
+        
+* Config (input), define quantos bits vai 
+                transmitir por segundo; 
+                
+* CLK 50MHz; 
+                
+* Será feito com um divisor de clock; 
+* Deve ter pelo menos 4 faixas de transmissão diferentes
 
 > N precisa ser simultaneo;
 > A mensagem a ser transmitida deve ser mostrada no Display
