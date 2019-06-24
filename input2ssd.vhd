@@ -23,20 +23,19 @@ end entity input2ssd;
 architecture rtl of input2ssd is
 
     --------------------------------------------------------------------------------------------
-    
     function to_ssd(x : std_logic_vector) return std_logic_vector is
     begin 
-        if x = "0110000" then return "0111111" ;
-        elsif x = "0110001" then return "0000110";
-        elsif x = "0110010" then return "1011011";
-        elsif x = "0110011" then return "1001111";
-        elsif x = "0110100" then return "1100110";
-        elsif x = "0110101" then return "1101101";
-        elsif x = "0110110" then return "1111101";
-        elsif x = "0110111" then return "0000111";
-        elsif x = "0111000" then return "1111111";
-        elsif x = "0111001" then return "1101111";
-		else return "0000000";
+        if x = "110000" then return "0111111" ;
+        elsif x = "110001" then return "0000110";
+        elsif x = "110010" then return "1011011";
+        elsif x = "110011" then return "1001111";
+        elsif x = "110100" then return "1100110";
+        elsif x = "110101" then return "1101101";
+        elsif x = "110110" then return "1111101";
+        elsif x = "110111" then return "0000111";
+        elsif x = "111000" then return "1111111";
+        elsif x = "111001" then return "1101111";
+		else return "000000";
         end if; 
     -- TODO Implementar o resto deste método
     end function;
