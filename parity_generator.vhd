@@ -2,17 +2,19 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity parity_checker is
+entity parity_generator is
     generic(n : natural := 8);
     port (
+        parity_mode : in std_logic;
         data : in std_logic_vector(n-1 downto 0);
         x : out std_logic_vector(n downto 0);
         parity : out std_logic
     );
-end entity parity_checker;
+end entity parity_generator;
 
-architecture rtl of parity_checker is
+architecture rtl of parity_generator is
     signal aux : std_logic_vector(n-1 downto 0);
+    signal parity_bit_aux : std_logic;
 	 
 begin
     
@@ -25,9 +27,15 @@ begin
 
     -- paridade par
     -- se o numero de 1 for par, entao, adiciona um 0 no menos significativo 
-    with aux(n-2) select x(0) <= 
+    with aux(n-2) select parity_bit_aux <= 
         '0' when '0', 
         '1' when others;  
+    
+    -- 0 set p paridade par
+    -- 1 set p paraidade impar
+    with parity_mode select x(0) <= 
+        parity_bit_aux when '0' 
+        not parity_bit_aux when others; 
 
     parity <= aux(n-2);
 

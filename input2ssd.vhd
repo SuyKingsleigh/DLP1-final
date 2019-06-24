@@ -9,14 +9,13 @@ use IEEE.numeric_std.all;
 
 entity input2ssd is
     generic(
-        n_of_displays : natural := 8;
         n_of_bits_ascii : natural := 7;
         ssd_bits : natural := 7
     );
 
     port (
-        ascii_in : in std_logic_vector(n_of_displays * n_of_bits_ascii - 1 downto 0);  
-        ssd0, ssd1, ssd2, ssd3, ssd4, ssd5, ssd6, ssd7: out std_logic_vector(0 to ssd_bits -1)
+        ascii : in std_logic_vector(n_of_bits_ascii -1 downto 0);
+        ssd : out std_logic_vector(ssd_bits -1 downto 0 )
     );
 end entity input2ssd;
 
@@ -42,25 +41,8 @@ architecture rtl of input2ssd is
     -- TODO Implementar o resto deste método
     end function;
     
-    --------------------------------------------------------------------------------------------
-			signal aux1 : std_logic_vector(n_of_bits_ascii downto 0);
-	 
-	 --------------------------------------------------------------------------------------------
+
 begin
+    ssd <= to_ssd(ascii);
     
---	 ssd0 <= to_ssd(ascii_in(n_of_bits_ascii * n_of_displays - 1 downto (n_of_displays -1) * n_of_bits_ascii - 1 ));
-	 
-	ssd0 <= to_ssd(ascii_in(55 downto 48));
-    ssd1 <= to_ssd(ascii_in(48 downto 41));
-    ssd2 <= to_ssd(ascii_in(41 downto 34));
-    ssd3 <= to_ssd(ascii_in(34 downto 27));
-    ssd4 <= to_ssd(ascii_in(27 downto 20));
-    ssd5 <= to_ssd(ascii_in(20 downto 13));
-    ssd6 <= to_ssd(ascii_in(13 downto 6));
-    ssd7 <= to_ssd(ascii_in(6 downto 0));
-    
-    
-	 
-	 
-	 
 end architecture rtl;
