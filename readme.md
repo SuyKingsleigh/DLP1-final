@@ -26,3 +26,8 @@
 
 * A mensagem a ser transmitida terá 1 bit de start,8 de dados, 1 de paridade e 1 de stop.
 
+## Diagrama 
+
+O diagrama a seguir representa de forma superficial, o circuito a ser implementado. 
+
+![diagram](diagram1.png)

@@ -35,9 +35,9 @@ architecture rtl of input2ssd is
         elsif x = "110111" then return "0000111";
         elsif x = "111000" then return "1111111";
         elsif x = "111001" then return "1101111";
-		else return "000000";
+		else return "0000000";
         end if; 
-    -- TODO Implementar o resto deste método
+    -- TODO Implementar o resto deste mtodo
     end function;
     
 

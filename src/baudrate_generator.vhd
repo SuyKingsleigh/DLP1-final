@@ -4,11 +4,11 @@ use IEEE.numeric_std.all;
 
 entity baudrate_generator is
     generic(
-            clk_freq : natural := 50000000; --deu problema com natural
+            clk_freq : natural := 50000000; 
             b9600 : natural := 5208; --11
-            b1 : natural :=  25000000; -- 01 
-            b4: natural := 12500000; 
-            b8 : natural := 6250000
+            b1 : natural :=  25000000; -- 00
+            b4: natural := 12500000; -- 01
+            b8 : natural := 6250000 -- 10
         );
     port (
         rst, clk : in std_logic; 
@@ -23,6 +23,8 @@ architecture rtl of baudrate_generator is
     signal max_sign : integer range 0 to 50000000; 
 	 
 begin
+		
+		baud <= clk_tmp;
 	
 	process(clk)
 		variable cnt : integer range 0 to clk_freq; -- maximo 
