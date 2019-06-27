@@ -12,8 +12,8 @@ entity main is
       a, b, c, d, e, f, g : in std_logic; 
       save, main_rst, main_clk, parity_mode : in std_logic;
       sel : in std_logic_vector(1 downto 0);
-      tx : out std_logic_vector(n -1 downto 0);
-      paridade, baudrate : out std_logic
+      tx : out std_logic;
+      parity_mode_out, paridade, baudrate : out std_logic
   );
 end main;
 
@@ -58,6 +58,18 @@ architecture rtl of main is
       baud : out std_logic
     );
   end component; 
+
+  component transmitter is 
+      generic(
+        n : natural := 8 -- numero de bits ascii + paridade 
+      );
+    port (
+        a : in std_logic_vector(n - 1 downto 0);
+        rst, clk : in std_logic;
+        tx : out std_logic
+    );
+  end component;
+
 ------------------------------------------------------------------------------
 ------------- SINAIS ---------------------------------------------------------
 signal saved_sign : std_logic; 
@@ -65,6 +77,7 @@ signal ascii_sign : std_logic_vector(n_ascii - 1 downto 0);
 signal ssd_sign : std_logic_vector(n_ssd - 1 downto 0);
 signal parity_sign : std_logic_vector(n_ascii downto 0); 
 signal baud_rate_sign :  std_logic;
+signal parity_mode_sign : std_logic;
 
 --------------------------------------------------------------------------------
 begin
@@ -103,5 +116,19 @@ begin
     sel => sel, 
     baud => baud_rate_sign
   );
+  
+  transmissor : transmitter 
+  port map(
+    a => parity_sign, -- paridade + saida 
+    rst => main_rst, 
+    tx => tx, 
+    clk => baud_rate_sign
+  );
+ -------------------- CODIGO CONCORRENTE ----------------------------------------------------------
+ 
+ baudrate <= baud_rate_sign; -- da o baudrate gerado
+ parity_mode_sign <= parity_mode;
+ parity_mode_out <= parity_mode_sign;
+ 
 
 end architecture rtl;
