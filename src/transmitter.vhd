@@ -4,45 +4,57 @@ use IEEE.numeric_std.all;
 
 entity transmitter is
     generic(
-        n : natural := 8; -- numero de bits ascii + paridade 
-        n_bits_msg : natural := 11
-    );
+        n : natural := 8 -- numero de bits ascii + paridade 
+      );
     port (
         a : in std_logic_vector(n - 1 downto 0);
-        rst, clk : in std_logic;
-        tx : out std_logic
+        send, rst, clk : in std_logic;
+        tx, led : out std_logic
     );
 end entity transmitter;
 
 architecture rtl of transmitter is
-    signal msg, msg_aux : std_logic_vector(10 downto 0);
+
+    type state is (wait_msg, sending);
+    signal pr_state, nx_state : state;
+    signal msg : std_logic_vector(10 downto 0);
+
 begin
-    ------------------- CODIGO CONCORRENTE ----------------------------
 
-    msg_aux(10) <= '1'; -- start bit
-    msg_aux(9 downto 2) <= a; -- paridade + mensagem em si
-	msg_aux(1 downto 0) <= "11";  -- os dois stop bits
-    
-    with rst select msg <= 
-        "00000000000" when '1', 
-        msg_aux when others;
-
-    ------------------- CODIGO SEQUENCIAL ------------------------------
-
-    process(clk)
-        variable i : integer range n_bits_msg -1 downto 0 := n_bits_msg - 1;
-    begin
-        if rising_edge(clk) then
-            if i = 0 then
-				
-                i := n_bits_msg - 1;
-            else
-                tx <= msg(i);
-                i := i - 1; 
-            end if ;
-            
-        end if ;
+---------------------- CODIGO SEQUENCIAL ---------------------------
+    process(clk, rst)
+    begin 
+        if rst = '1' then
+            pr_state <= wait_msg; 
+        elsif rising_edge(clk) then 
+            pr_state <= nx_state;
+        end if;
     end process;
     
+    process(pr_state, nx_state, clk, send)
+        variable i : integer range 10 downto 0 := 10;
+    begin
+        case pr_state is
+            when wait_msg =>
+                tx <= '0';
+                led <= '0'; 
+                if send = '1' then
+                    nx_state <= sending; 
+                end if;    
+            when sending =>
+                msg(10) <= '1'; -- start bit 
+                msg(9 downto 2) <= a;  -- parity + msg
+                msg(1 downto 0) <= "11"; --2 stop bits
+                if rising_edge(clk) then
+                    if i = 0 then
+                        i := 10;
+                        nx_state <= wait_msg;
+                    else 
+                        tx<=msg(i);
+                        i := i - 1;
+                    end if ;
+                end if;
+        end case; 
+    end process;
     
 end architecture rtl;

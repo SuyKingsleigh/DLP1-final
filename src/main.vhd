@@ -65,7 +65,7 @@ architecture rtl of main is
       );
     port (
         a : in std_logic_vector(n - 1 downto 0);
-        rst, clk : in std_logic;
+        send, rst, clk : in std_logic;
         tx : out std_logic
     );
   end component;
@@ -121,6 +121,7 @@ begin
   port map(
     a => parity_sign, -- paridade + saida 
     rst => main_rst, 
+    send => saved_sign, 
     tx => tx, 
     clk => baud_rate_sign
   );
