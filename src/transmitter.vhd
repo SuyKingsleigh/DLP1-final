@@ -13,48 +13,66 @@ entity transmitter is
     );
 end entity transmitter;
 
-architecture rtl of transmitter is
+architecture arch of transmitter is
 
-    type state is (wait_msg, sending);
-    signal pr_state, nx_state : state;
-    signal msg : std_logic_vector(10 downto 0);
+    type state is(wait_msg,start_bit,parity, b0, b1, b2, b3, b4, b5, b6);
+    signal pr_state, nx_state : state; 
 
 begin
 
----------------------- CODIGO SEQUENCIAL ---------------------------
     process(clk, rst)
-    begin 
-        if rst = '1' then
+	 begin
+        if rst='1' then
             pr_state <= wait_msg; 
         elsif rising_edge(clk) then 
-            pr_state <= nx_state;
+            pr_state <= nx_state; 
         end if;
     end process;
-    
+
     process(pr_state, nx_state, clk, send)
-        variable i : integer range 10 downto 0 := 10;
-    begin
-        case pr_state is
-            when wait_msg =>
-                tx <= '0';
-                led <= '0'; 
-                if send = '1' then
-                    nx_state <= sending; 
-                end if;    
-            when sending =>
-                msg(10) <= '1'; -- start bit 
-                msg(9 downto 2) <= a;  -- parity + msg
-                msg(1 downto 0) <= "11"; --2 stop bits
-                if rising_edge(clk) then
-                    if i = 0 then
-                        i := 10;
-                        nx_state <= wait_msg;
+    begin 
+            led <= '1';
+
+            case pr_state is 
+                when wait_msg =>
+                    tx <= '0';
+                    led <= '0';
+                    if send = '1' then
+                        nx_state <= start_bit;
                     else 
-                        tx<=msg(i);
-                        i := i - 1;
+                        nx_state <= wait_msg;
                     end if ;
-                end if;
+                when start_bit =>
+                    tx <= '0';
+                    nx_state <= parity;
+                when parity =>
+                    tx <= a(7);
+                    nx_state <= b0;
+                when b0 =>
+                    tx <= a(6);
+                    nx_state <= b1;
+                when b1 =>
+                    tx <= a(5);
+                    nx_state <= b2;
+                when b2 =>
+                    tx <= a(4);
+                    nx_state <= b3;
+                when b3 =>
+                    tx <= a(3);
+                    nx_state <= b4;
+               when b4 =>
+                    tx <= a(2);
+                    nx_state <= b5;
+                when b5 =>
+                    tx <= a(1);
+                    nx_state <= b6;
+                when b6 =>
+                    tx <= a(0);
+                    nx_state <= wait_msg;
+
         end case; 
+
     end process;
-    
-end architecture rtl;
+
+
+end arch ; -- arch

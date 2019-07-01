@@ -23,7 +23,8 @@ begin
         aux(i+1) <= aux(i) xor data(i + 2);
     end generate xor_loop;
         
-    x(n-1 downto 0) <= data;
+    x(n downto 1) <= data; -- recebe os dados
+    x(0) <= aux(n-2); -- recebe o bit de paridade 
 
     -- paridade par
     -- se o numero de 1 for par, entao, adiciona um 0 no menos significativo 

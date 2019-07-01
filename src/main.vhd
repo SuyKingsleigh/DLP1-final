@@ -152,14 +152,14 @@ begin
   port map(
     serial_in => serial_in, 
     clk => other_clk_in, 
-    a => serial2parallel_sign(0),
-    b => serial2parallel_sign(1),
-    c => serial2parallel_sign(2),
-    d => serial2parallel_sign(3),
-    e => serial2parallel_sign(4),
-    f => serial2parallel_sign(5),
-    g => serial2parallel_sign(6),
-    parity_bit => serial2parallel_sign(7)
+    a => serial2parallel_sign(1),
+    b => serial2parallel_sign(2),
+    c => serial2parallel_sign(3),
+    d => serial2parallel_sign(4),
+    e => serial2parallel_sign(5),
+    f => serial2parallel_sign(6),
+    g => serial2parallel_sign(7),
+    parity_bit => serial2parallel_sign(0)
   );
 
   parityChecker : parity_checker 
@@ -175,12 +175,12 @@ begin
  parity_mode_out <= parity_mode_sign;
 
   -- mensagem recebida serial->paralelo
-  outA <= serial2parallel_sign(0);
-  outB <= serial2parallel_sign(1);
-  outC <= serial2parallel_sign(2);
-  outD <= serial2parallel_sign(3);
-  outE <= serial2parallel_sign(4);
-  outF <= serial2parallel_sign(5);
-  outG <= serial2parallel_sign(6);
+  outA <= serial2parallel_sign(1);
+  outB <= serial2parallel_sign(2);
+  outC <= serial2parallel_sign(3);
+  outD <= serial2parallel_sign(4);
+  outE <= serial2parallel_sign(5);
+  outF <= serial2parallel_sign(6);
+  outG <= serial2parallel_sign(7);
 
 end architecture rtl;

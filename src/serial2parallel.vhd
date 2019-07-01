@@ -8,8 +8,8 @@ entity serial2parallel is
         n : natural := 8 -- numero de bits uteis, contando com a paridade     
     );
     port (
-        serial_in : in std_logic; 
-        a,b,c,d,e,f,g, parity_bit, clk : out std_logic    
+        serial_in, clk : in std_logic; 
+        a,b,c,d,e,f,g, parity_bit : out std_logic    
 
     );
 end entity serial2parallel;
@@ -24,8 +24,8 @@ architecture rtl of serial2parallel is
 begin
     -- o clock eh o baudrate do transmissor 
     -- o primeiro bit eh start, portanto pode ser descartado
-    -- o segundo bit eh a paridade
     -- os 7 proximos sao a mesagem 
+    -- o penultimi bit eh a paridade
     -- os dois ultimos sao stop, portanto, podem ser descartados. 
 
     process(clk)
@@ -35,7 +35,7 @@ begin
     begin 
         if rising_edge(clk) then
             -- checa pelo bit de start  
-            if started = false and serial_in = '1' then
+            if started = false and serial_in = '0' then
                 started := true;
             end if;
 
@@ -48,7 +48,7 @@ begin
                     if i <= n-1 then
                         aux(i) <= serial_in; 
                     else 
-                        stop := stop + 1; 
+                        stops := stops + 1; 
                     end if ;
 
                     i := i - 1; 
