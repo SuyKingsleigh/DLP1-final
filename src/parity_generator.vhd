@@ -23,8 +23,7 @@ begin
         aux(i+1) <= aux(i) xor data(i + 2);
     end generate xor_loop;
         
-    x(n downto 1) <= data; -- recebe os dados
-    x(0) <= aux(n-2); -- recebe o bit de paridade 
+    x(n downto 1) <= data;
 
     -- paridade par
     -- se o numero de 1 for par, entao, adiciona um 0 no menos significativo 
@@ -34,7 +33,8 @@ begin
     
     -- 0 set p paridade par
     -- 1 set p paraidade impar
-    with parity_mode select x(n) <= 
+	 -- o menor bit eh a paridade
+    with parity_mode select x(0) <= 
         parity_bit_aux when '0', 
         not parity_bit_aux when others; 
 
