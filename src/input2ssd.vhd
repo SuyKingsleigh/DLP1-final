@@ -53,5 +53,5 @@ architecture rtl of input2ssd is
         end if; 
     end function;
 begin
-    ssd <= to_ssd(ascii);
+    ssd <= NOT to_ssd(ascii);
 end architecture rtl;

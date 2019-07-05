@@ -11,11 +11,12 @@ entity main is
   ); -- start, 8 bits msg, paridade, 2 stop; 
   port (
       a, b, c, d, e, f, g : in std_logic; 
-      save, main_rst, main_clk, parity_mode : in std_logic;
+      save_in, main_rst_IN, main_clk, parity_mode : in std_logic;
       sel : in std_logic_vector(1 downto 0);
       tx : out std_logic;
-      parity_mode_out, paridade, baudrate : out std_logic;
-      d0, d1, d2, d3, d4, d5, d6, d7 : out std_logic_vector(n_ascii - 1 downto 0)
+ --      d0, d1, d2, d3, d4, d5, d6, d7 : out std_logic_vector(n_ascii - 1 downto 0);
+		parity_mode_out, paridade, baudrate, led, led_clk : out std_logic
+
   );
 end main;
 
@@ -37,6 +38,7 @@ architecture rtl of main is
   component parallel2serial is 
     port (
       a, b, c, d, e, f, g: in std_logic;
+	  clk, rst : in std_logic;
       save : in std_logic;
       saved : out std_logic;
       serial : out std_logic_vector(6 downto 0)
@@ -54,11 +56,25 @@ architecture rtl of main is
   end component;
   
   component baudrate_generator is 
-      port (
+    generic(
+            clk_freq : natural := 4; 
+            b9600 : natural := 1; --11
+            b1 : natural :=  2; -- 00
+            b4: natural := 3; -- 01
+            b8 : natural := 4 -- 10
+
+	-------------- COISO PRA TESTES --------------
+--			   clk_freq : natural := 5000; 
+--            b9600 : natural := 5; --11
+--            b1 : natural :=  2500; -- 00
+--            b4: natural := 1250; -- 01
+--            b8 : natural := 625 -- 10
+		  );
+    port (
         rst, clk : in std_logic; 
         sel : in std_logic_vector(1 downto 0); 
-      baud : out std_logic
-    );
+		  baud : out std_logic
+	 );
   end component; 
 
   component transmitter is 
@@ -68,7 +84,7 @@ architecture rtl of main is
     port (
         a : in std_logic_vector(n - 1 downto 0);
         send, rst, clk : in std_logic;
-        tx : out std_logic
+        tx, led : out std_logic
     );
   end component;
 
@@ -86,9 +102,11 @@ signal saved_sign : std_logic;
 signal ascii_sign : std_logic_vector(n_ascii - 1 downto 0);
 signal ssd_sign : std_logic_vector(n_ssd - 1 downto 0);
 signal parity_sign : std_logic_vector(n_ascii downto 0); 
-signal baud_rate_sign :  std_logic;
+signal baud_rate_sign, led_sign :  std_logic;
 signal parity_mode_sign : std_logic;
 signal serial2parallel_sign : std_logic_vector(n_msg-1 downto 0);
+signal main_rst : std_logic;
+signal save : std_logic;
 
 --------------------------------------------------------------------------------
 begin
@@ -101,6 +119,8 @@ begin
       e => e, 
       f => f, 
       g => g, 
+	   clk => baud_rate_sign,
+	   rst => main_rst,
       save => save,
       saved => saved_sign, 
       serial => ascii_sign
@@ -121,6 +141,20 @@ begin
   );  
 
   gerador_baudrate : baudrate_generator 
+  generic map(
+       clk_freq => 50000000, 
+       b9600 => 5208, --11
+       b1 => 25000000, -- 00
+       b4 =>12500000, -- 01
+       b8 => 6250000 -- 10
+  )
+-- generic map(
+--       clk_freq => 4, 
+--       b9600 => 1, --11
+--       b1 => 2, -- 00
+--       b4 =>3, -- 01
+--       b8 => 4 -- 10
+--  )
   port map(
     rst => main_rst,
     clk => main_clk,
@@ -134,29 +168,32 @@ begin
     rst => main_rst, 
     send => saved_sign, 
     tx => tx, 
-    clk => baud_rate_sign
+    clk => baud_rate_sign,
+	 led => led_sign
   );
 
 
-  seletor : selector 
-  port map(
-    save => saved_sign,
-    data => ssd_sign,
-    rst => main_rst, 
-      d0 => d0, 
-      d1 => d1, 
-      d2 => d2, 
-      d3 => d3, 
-      d4 => d4, 
-      d5 => d5, 
-      d6 => d6, 
-      d7 => d7 
-  );
+--  seletor : selector 
+--  port map(
+--    save => saved_sign,
+--    data => ssd_sign,
+--    rst => main_rst, 
+--      d0 => d0, 
+--      d1 => d1, 
+--      d2 => d2, 
+--      d3 => d3, 
+--      d4 => d4, 
+--      d5 => d5, 
+--      d6 => d6, 
+--      d7 => d7 
+--  );
  -------------------- CODIGO CONCORRENTE ----------------------------------------------------------
  
  baudrate <= baud_rate_sign; -- da o baudrate gerado
  parity_mode_sign <= parity_mode;
  parity_mode_out <= parity_mode_sign;
-
-
+ led <= led_sign;
+ main_rst <= not main_rst_IN;
+ save <= not save_in;
+ led_clk <= baud_rate_sign;
 end architecture rtl;

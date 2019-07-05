@@ -5,6 +5,7 @@ use IEEE.numeric_std.all;
 entity parallel2serial is
     port (
         save : in std_logic;
+		  clk, rst : in std_logic;
         a, b, c, d, e, f, g : in std_logic;
         saved : out std_logic;
         serial : out std_logic_vector(6 downto 0)
@@ -26,9 +27,15 @@ begin
     serial_aux(2) <= e;        
     serial_aux(1) <= f;        
     serial_aux(0) <= g;        
-    
-	 with save select serial <= 
-			serial_aux when '1', 
-			"0000000" when others;
-    
+	process(clk, rst)
+	begin 
+			if (rst = '1') then
+				serial <= (others => '0');
+			elsif rising_edge(clk) then
+				if save = '1' then
+					serial <= serial_aux;
+				end if;
+			end if;
+
+	end process;    
 end architecture rtl;

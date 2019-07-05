@@ -77,13 +77,12 @@ begin
 					 
 					 -- os dois stop bits sao de 0
                 when stop0 =>
-                    tx <= '0'; 
+                    tx <= '1'; 
                     nx_state <= stop1;
                 
                 when stop1 =>
-                    tx <= '0'; 
+                    tx <= '1'; 
                     nx_state <= wait_msg;
-
 
         end case; 
 

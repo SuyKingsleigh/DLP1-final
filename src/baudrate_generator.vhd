@@ -9,7 +9,14 @@ entity baudrate_generator is
             b1 : natural :=  25000000; -- 00
             b4: natural := 12500000; -- 01
             b8 : natural := 6250000 -- 10
-        );
+
+	-------------- COISO PRA TESTES --------------
+--			   clk_freq : natural := 5000; 
+--            b9600 : natural := 5; --11
+--            b1 : natural :=  2500; -- 00
+--            b4: natural := 1250; -- 01
+--            b8 : natural := 625 -- 10
+		  );
     port (
         rst, clk : in std_logic; 
         sel : in std_logic_vector(1 downto 0); 
