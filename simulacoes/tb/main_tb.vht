@@ -22,14 +22,18 @@ SIGNAL d7 : STD_LOGIC_VECTOR(6 DOWNTO 0);
 SIGNAL e : STD_LOGIC;
 SIGNAL f : STD_LOGIC;
 SIGNAL g : STD_LOGIC;
-SIGNAL main_clk : STD_LOGIC;
+-- valores iniciais de clock e rst
+SIGNAL main_clk : STD_LOGIC:= '0';
 SIGNAL main_rst : STD_LOGIC;
+
 SIGNAL paridade : STD_LOGIC;
 SIGNAL parity_mode : STD_LOGIC;
 SIGNAL parity_mode_out : STD_LOGIC;
 SIGNAL save : STD_LOGIC;
 SIGNAL sel : STD_LOGIC_VECTOR(1 DOWNTO 0);
 SIGNAL tx : STD_LOGIC;
+
+
 COMPONENT main
 	PORT (
 	a : IN STD_LOGIC;
@@ -58,6 +62,14 @@ COMPONENT main
 	tx : OUT STD_LOGIC
 	);
 END COMPONENT;
+
+-- constantes 
+	constant tmain_clk :time := 1 ns; 
+	constant trst : time := 100 ps;
+	constant tsave : time := 25 ns; 
+	constant tparity_mode : time := 50 ns;
+	constant tinput : time := 30 ns;
+
 BEGIN
 	i1 : main
 	PORT MAP (
@@ -87,19 +99,20 @@ BEGIN
 	sel => sel,
 	tx => tx
 	);
-init : PROCESS                                               
--- variable declarations                                     
-BEGIN                   
-                                     
-        -- code that executes only once                      
-WAIT;                                                       
-END PROCESS init;                                           
-always : PROCESS                                              
--- optional sensitivity list                                  
--- (        )                                                 
--- variable declarations                                      
-BEGIN                                                         
-        -- code executes for every event on sensitivity list  
-WAIT;                                                        
-END PROCESS always;                                          
+	-- codigo concorrente teste 
+	main_clk <= not main_clk after tmain_clk;
+	main_rst <= '1', '0' after trst; 
+	parity_mode <= '0', '1' after tparity_mode, '0' after 100 ns;
+	save <= not save after tsave; 
+
+	sel <= "11"; 
+	a <= '0'; 
+	b <= '1';
+	c <= '1';
+	d <= '0';	
+	e <= '0';
+	f <= '0';
+	g <= '0', '1' after tinput;
+
+                                   
 END main_arch;
