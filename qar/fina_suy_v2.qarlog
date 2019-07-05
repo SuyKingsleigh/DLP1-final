@@ -1,0 +1,35 @@
+Quartus II Archive log --	/home/suyan.m/DLP/FINAL/fina_suy_v2.qarlog
+
+Archive:	/home/suyan.m/DLP/FINAL/fina_suy_v2.qar
+Date:		Fri Jul  5 17:28:00 2019
+Quartus II 32-bit		13.0.1 Build 232 06/12/2013 SP 1 SJ Full Version
+
+	=========== Files Selected: ===========
+/home/suyan.m/DLP/FINAL/Waveform.vwf
+/home/suyan.m/DLP/FINAL/baudrate_generator.vhd
+/home/suyan.m/DLP/FINAL/db/input2ssd.sim.vwf
+/home/suyan.m/DLP/FINAL/incremental_db/compiled_partitions/input2ssd.db_info
+/home/suyan.m/DLP/FINAL/input2ssd.qpf
+/home/suyan.m/DLP/FINAL/input2ssd.qsf
+/home/suyan.m/DLP/FINAL/input2ssd.vhd
+/home/suyan.m/DLP/FINAL/main.vhd
+/home/suyan.m/DLP/FINAL/parallel2serial.vhd
+/home/suyan.m/DLP/FINAL/parity_checker.vhd
+/home/suyan.m/DLP/FINAL/parity_generator.vhd
+/home/suyan.m/DLP/FINAL/selector.vhd
+/home/suyan.m/DLP/FINAL/serial2parallel.vhd
+/home/suyan.m/DLP/FINAL/simulation/modelsim/baudrate_gen.do
+/home/suyan.m/DLP/FINAL/simulation/modelsim/ifsc_main.do
+/home/suyan.m/DLP/FINAL/simulation/modelsim/input2ssd.do
+/home/suyan.m/DLP/FINAL/simulation/modelsim/main.do
+/home/suyan.m/DLP/FINAL/simulation/modelsim/main.vht
+/home/suyan.m/DLP/FINAL/simulation/modelsim/parallel2serial.do
+/home/suyan.m/DLP/FINAL/simulation/modelsim/parity_generator.do
+/home/suyan.m/DLP/FINAL/simulation/modelsim/tb.do
+/home/suyan.m/DLP/FINAL/simulation/modelsim/transmitter.do
+/home/suyan.m/DLP/FINAL/transmitter.vhd
+/opt/altera/13.0sp1/quartus/linux/assignment_defaults.qdf
+	======= Total: 24 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
