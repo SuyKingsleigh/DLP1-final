@@ -14,8 +14,8 @@ entity main is
       save, main_rst, main_clk, parity_mode : in std_logic;
       sel : in std_logic_vector(1 downto 0);
       tx : out std_logic;
-      erro_trans : out std_logic;
-      parity_mode_out, paridade, baudrate : out std_logic
+      parity_mode_out, paridade, baudrate : out std_logic;
+      d0, d1, d2, d3, d4, d5, d6, d7 : out std_logic_vector(n_ascii - 1 downto 0)
   );
 end main;
 
@@ -71,6 +71,14 @@ architecture rtl of main is
         tx : out std_logic
     );
   end component;
+
+  component selector is 
+    port (
+        save, rst : in std_logic; 
+        data : in std_logic_vector(n_ascii - 1 downto 0);
+        d0, d1, d2, d3, d4, d5, d6, d7 : out std_logic_vector(n_ascii - 1 downto 0)
+    );
+  end component; 
 
 ------------------------------------------------------------------------------
 ------------- SINAIS ---------------------------------------------------------
@@ -129,6 +137,21 @@ begin
     clk => baud_rate_sign
   );
 
+
+  seletor : selector 
+  port map(
+    save => saved_sign,
+    data => ssd_sign,
+    rst => main_rst, 
+      d0 => d0, 
+      d1 => d1, 
+      d2 => d2, 
+      d3 => d3, 
+      d4 => d4, 
+      d5 => d5, 
+      d6 => d6, 
+      d7 => d7 
+  );
  -------------------- CODIGO CONCORRENTE ----------------------------------------------------------
  
  baudrate <= baud_rate_sign; -- da o baudrate gerado

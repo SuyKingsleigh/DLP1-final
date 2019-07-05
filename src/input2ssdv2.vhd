@@ -25,7 +25,7 @@ architecture rtl of input2ssd is
     --------------------------------------------------------------------------------------------
     function to_ssd(x : std_logic_vector) return std_logic_vector is
     begin 
-        if    x = "0110000" then return "0111111"; -- 0
+        if      x = "0110000" then return "0111111"; -- 0
         elsif x = "0110001" then return "0000110"; -- 1
         elsif x = "0110010" then return "1011011"; -- 2
         elsif x = "0110011" then return "1001111"; -- 3
@@ -36,18 +36,18 @@ architecture rtl of input2ssd is
         elsif x = "0111000" then return "1111111"; -- 8
         elsif x = "0111001" then return "1101111"; -- 9
 
-        elsif x = "1000001" then return "1011111"; -- a
-        elsif x = "1000010" then return "1111100"; -- b
-        elsif x = "1000011" then return "1011000"; -- c
-        elsif x = "1000100" then return "1011100"; -- d
+        elsif x = "1000001" then return "1111101"; -- a
+        elsif x = "1000010" then return "0011111"; -- b
+        elsif x = "1000011" then return "0001101"; -- c
+        elsif x = "1000100" then return "0011101"; -- d
         elsif x = "1000101" then return "1001111"; -- e
-        elsif x = "1000110" then return "1111001"; -- f
-        elsif x = "1001000" then return "1110110"; -- h
-        elsif x = "1001001" then return "0000110"; -- i
-        elsif x = "1001100" then return "0000110"; -- l 
-        elsif x = "1001111" then return "0111111"; -- o
-        elsif x = "1010000" then return "1110011"; -- p 
-        elsif x = "1010011" then return "1101101"; -- s 
+        elsif x = "1000110" then return "1000111"; -- f
+        elsif x = "1001000" then return "0110111"; -- h
+        elsif x = "1001001" then return "0110000"; -- i
+        elsif x = "1001100" then return "0110000"; -- l 
+        elsif x = "1001111" then return "1111110"; -- o
+        elsif x = "1010000" then return "1100111"; -- p 
+        elsif x = "1010011" then return "1011011"; -- s 
         elsif x = "1010101" then return "0111110"; -- u
 		else return "0000000";
         end if; 

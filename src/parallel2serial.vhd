@@ -17,16 +17,15 @@ architecture rtl of parallel2serial is
     signal serial_aux : std_logic_vector(serial'range);
     
 begin
-
-
+	 -- a eh o msb
     saved <= save;
-    serial_aux(0) <= a;                
-    serial_aux(1) <= b;        
-    serial_aux(2) <= c;        
+    serial_aux(6) <= a;                
+    serial_aux(5) <= b;        
+    serial_aux(4) <= c;        
     serial_aux(3) <= d;        
-    serial_aux(4) <= e;        
-    serial_aux(5) <= f;        
-    serial_aux(6) <= g;        
+    serial_aux(2) <= e;        
+    serial_aux(1) <= f;        
+    serial_aux(0) <= g;        
     
 	 with save select serial <= 
 			serial_aux when '1', 
