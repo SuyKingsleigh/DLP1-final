@@ -18,3 +18,4 @@ force -freeze sim:/input2ssd/ascii 1001000 0
 run 0.5 ns
 force -freeze sim:/input2ssd/ascii 1001111 0
 run 0.5 ns
+
