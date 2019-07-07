@@ -173,27 +173,31 @@ begin
   );
 
 
---  seletor : selector 
---  port map(
---    save => saved_sign,
---    data => ssd_sign,
---    rst => main_rst, 
---      d0 => d0, 
---      d1 => d1, 
---      d2 => d2, 
---      d3 => d3, 
---      d4 => d4, 
---      d5 => d5, 
---      d6 => d6, 
---      d7 => d7 
---  );
+ seletor : selector 
+ port map(
+   save => saved_sign,
+   data => ssd_sign,
+   rst => main_rst, 
+     d0 => d0, 
+     d1 => d1, 
+     d2 => d2, 
+     d3 => d3, 
+     d4 => d4, 
+     d5 => d5, 
+     d6 => d6, 
+     d7 => d7 
+ );
  -------------------- CODIGO CONCORRENTE ----------------------------------------------------------
  
  baudrate <= baud_rate_sign; -- da o baudrate gerado
- parity_mode_sign <= parity_mode;
- parity_mode_out <= parity_mode_sign;
- led <= led_sign;
- main_rst <= not main_rst_IN;
- save <= not save_in;
+ parity_mode_sign <= parity_mode; -- define o modo de paridade 
+ parity_mode_out <= parity_mode_sign; -- joga pra saida o modo de paridade 
+ 
+ -- led de transmissao 
+ led <= led_sign;  
  led_clk <= baud_rate_sign;
+ 
+ -- botoes sao invertidos 
+ main_rst <= not main_rst_IN; 
+ save <= not save_in; -- 
 end architecture rtl;
